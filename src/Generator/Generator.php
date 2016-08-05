@@ -58,7 +58,7 @@ class Generator
 
         foreach ($this->data as $item) {
             $type = explode("(", $item['Type'])[0];
-            $field = Kernel::dashesToCamelCase($item['Field']);
+            $field =$item['Field'];
             $default = $item['Default'];
             $default = is_numeric($default) ? $default : "'$default'";
             $type = $type == "int" ? "integer" : $type;
@@ -75,8 +75,9 @@ class Generator
         foreach ($contentArray as $item) {
             $type = $item['type'] == "integer" ? "int" : $item['type'];
             $field = $item['field'];
-            $getter = "get".ucfirst($field);
-            $setter = "set".ucfirst($field);
+            $fieldCamel = Kernel::dashesToCamelCase($item['Field'], true);
+            $getter = "get".$fieldCamel;
+            $setter = "set".$fieldCamel;
 
             $fileContent .= "\t/**\n";
             $fileContent .= "\t * @return $type\n";
