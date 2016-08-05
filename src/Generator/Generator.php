@@ -75,7 +75,7 @@ class Generator
         foreach ($contentArray as $item) {
             $type = $item['type'] == "integer" ? "int" : $item['type'];
             $field = $item['field'];
-            $fieldCamel = Kernel::dashesToCamelCase($item['Field'], true);
+            $fieldCamel = Kernel::dashesToCamelCase($field, true);
             $getter = "get".$fieldCamel;
             $setter = "set".$fieldCamel;
 

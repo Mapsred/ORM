@@ -179,7 +179,7 @@ class Kernel
     public static function dashesToCamelCase($string, $capitalizeFirst = false)
     {
         $str = str_replace(' ', '', ucwords(str_replace('_', ' ', $string)));
-        $str = $capitalizeFirst ? $str[0]:  strtolower($str[0]);
+        $str = $capitalizeFirst ? $str:  strtolower($str[0]);
 
         return $str;
     }
