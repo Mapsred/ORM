@@ -113,6 +113,9 @@ class Generator
         if (is_file($file)) {
             rename($file, $file.".old");
         }
+        if (!is_dir($this->dir_entity)) {
+            mkdir($this->dir_entity);
+        }
         file_put_contents($file, $fileContent);
     }
 
@@ -178,6 +181,9 @@ class Generator
         $file = $this->dir_repository.$filename;
         if (is_file($file)) {
             rename($file, $file.".old");
+        }
+        if (!is_dir($this->dir_repository)) {
+            mkdir($this->dir_repository);
         }
         file_put_contents($file, $fileContent);
     }
