@@ -12,6 +12,7 @@ $commands = [
     'generator' => [
         'entity' => 1,
         'repository' => 2,
+        "both" => 3,
     ],
 ];
 
@@ -30,13 +31,15 @@ switch ($case) {
             exit;
         }
         if (!isset($argv[3])) {
-            echo "class name must be defined";
-            exit;
+            $argv[3] = $argv[2];
         }
         $generator = new \Maps_red\ORM\Generator\Generator($argv[2]);
         if ($case == 1) {
             $generator->entity($argv[3]);
-        } else {
+        } elseif ($case == 2) {
+            $generator->repository($argv[3]);
+        }else {
+            $generator->entity($argv[3]);
             $generator->repository($argv[3]);
         }
         break;
