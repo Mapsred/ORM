@@ -1,0 +1,10 @@
+{
+    "name": "maps_red/orm",
+    "authors": [
+        {
+            "name": "Francois",
+            "email": "maps_red@yahoo.fr"
+        }
+    ],
+    "require": {}
+}
