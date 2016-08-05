@@ -6,10 +6,10 @@
  * Time: 13:27
  */
 
-namespace ORM\Generator;
+namespace Maps_red\ORM\Generator;
 
-use ORM\Abstracts\DataBase;
-use ORM\Kernel;
+use Maps_red\ORM\Abstracts\DataBase;
+use Maps_red\ORM\Kernel;
 
 class Generator
 {
@@ -52,7 +52,7 @@ class Generator
         $contentArray = [];
         $fileContent = $this->buildComment();
         $fileContent .= "namespace $this->namespaceEntity;\n\n";
-        $fileContent .= "use ORM\\Abstracts\\MainEntity;\n";
+        $fileContent .= "use Maps_red\\ORM\\Abstracts\\MainEntity;\n";
         $fileContent .= "\nclass $className extends MainEntity\n";
         $fileContent .= "{\n";
 
@@ -129,7 +129,7 @@ class Generator
         $fileContent = $this->buildComment();
         $fileContent .= "namespace $this->namespaceRepository;\n\n";
         $fileContent .= "use $this->namespaceEntity\\$entity;\n";
-        $fileContent .= "use ORM\\Abstracts\\MainRepository;\n";
+        $fileContent .= "use Maps_red\\ORM\\Abstracts\\MainRepository;\n";
         $fileContent .= "\nclass $className extends MainRepository\n";
         $fileContent .= "{\n";
         $fileContent .= "\t/**\n";

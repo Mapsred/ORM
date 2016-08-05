@@ -1,6 +1,6 @@
 <?php
 
-namespace ORM;
+namespace Maps_red\ORM;
 
 /**
  * Created by PhpStorm.

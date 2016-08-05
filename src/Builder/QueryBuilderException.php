@@ -6,7 +6,7 @@
  * Time: 16:50
  */
 
-namespace ORM\Builder;
+namespace Maps_red\ORM\Builder;
 
 class QueryBuilderException extends \Exception
 {

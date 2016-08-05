@@ -5,19 +5,26 @@
  * Date: 05/08/2016
  * Time: 18:38
  */
-require_once(__DIR__."/vendor/autoload.php");
+$test = false;
 
-$configPath = __DIR__."/../app/config.php";
+if ($test) {
+    require_once(__DIR__."/vendor/autoload.php");
+}else {
+    require_once(__DIR__."/../../autoload.php");
+}
+
+
+$configPath = __DIR__."/../../../app/config.php";
 //For test purpose - to remove
 if (is_file(__DIR__."/ConfigTest.php")) {
     $content = require_once(__DIR__."/ConfigTest.php");
 }else if (!is_file($configPath)) {
     throw new Exception(sprintf("file %s does not exists", $configPath));
 } else {
-    $parameters = require_once($configPath);
+    $content = require_once($configPath);
 }
 
-\ORM\Kernel::setByArray($content);
+\Maps_red\ORM\Kernel::setByArray($content);
 
 
-$entityNamespace = str_replace("\\", "\\\\", \ORM\Kernel::getNamespaceEntity());
+$entityNamespace = str_replace("\\", "\\\\", \Maps_red\ORM\Kernel::getNamespaceEntity());

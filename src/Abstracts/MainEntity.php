@@ -6,7 +6,7 @@
  * Time: 00:12
  */
 
-namespace ORM\Abstracts;
+namespace Maps_red\ORM\Abstracts;
 
 abstract class MainEntity
 {

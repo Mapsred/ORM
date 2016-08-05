@@ -6,10 +6,10 @@
  * Date: 12/05/2016
  * Time: 21:51
  */
-namespace ORM\Abstracts;
+namespace Maps_red\ORM\Abstracts;
 
-use ORM\Builder\QueryBuilder;
-use ORM\Kernel;
+use Maps_red\ORM\Builder\QueryBuilder;
+use Maps_red\ORM\Kernel;
 
 abstract class MainRepository extends DataBase
 {

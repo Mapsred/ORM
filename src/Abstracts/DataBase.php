@@ -7,9 +7,9 @@
  * Time: 21:34
  */
 
-namespace ORM\Abstracts;
+namespace Maps_red\ORM\Abstracts;
 
-use ORM\Kernel;
+use Maps_red\ORM\Kernel;
 
 abstract class DataBase
 {

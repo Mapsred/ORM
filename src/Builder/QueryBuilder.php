@@ -6,11 +6,10 @@
  * Time: 15:58
  */
 
-namespace ORM\Builder;
+namespace Maps_red\ORM\Builder;
 
-use ORM\Abstracts\DataBase;
-use ORM\Abstracts\MainRepository;
-
+use Maps_red\ORM\Abstracts\DataBase;
+use Maps_red\ORM\Abstracts\MainRepository;
 
 class QueryBuilder
 {

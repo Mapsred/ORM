@@ -33,7 +33,7 @@ switch ($case) {
             echo "class name must be defined";
             exit;
         }
-        $generator = new \ORM\Generator\Generator($argv[2]);
+        $generator = new \Maps_red\ORM\Generator\Generator($argv[2]);
         if ($case == 1) {
             $generator->entity($argv[3]);
         } else {
