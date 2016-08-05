@@ -58,7 +58,7 @@ class Generator
 
         foreach ($this->data as $item) {
             $type = explode("(", $item['Type'])[0];
-            $field = $item['Field'];
+            $field = Kernel::dashesToCamelCase($item['Field']);
             $default = $item['Default'];
             $default = is_numeric($default) ? $default : "'$default'";
             $type = $type == "int" ? "integer" : $type;

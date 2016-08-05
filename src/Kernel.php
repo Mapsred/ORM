@@ -192,7 +192,7 @@ class Kernel
      * @param bool $capitalizeFirst
      * @return string
      */
-    private static function dashesToCamelCase($string, $capitalizeFirst = false)
+    public static function dashesToCamelCase($string, $capitalizeFirst = false)
     {
         $str = str_replace(' ', '', ucwords(str_replace('_', ' ', $string)));
         $str[0] = $capitalizeFirst ? $str[0]:  strtolower($str[0]);
