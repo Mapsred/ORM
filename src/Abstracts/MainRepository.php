@@ -190,9 +190,13 @@ abstract class MainRepository extends DataBase
      */
     public function findBy(array $array, array $order = null)
     {
-        $key = key($array);
-        $value = self::secureEncodeSQL($array[$key]);
-        $request = sprintf("%sWHERE %s = %s", self::SELECT, $key, $value);
+        if (!empty($array)) {
+            $key = key($array);
+            $value = self::secureEncodeSQL($array[$key]);
+            $request = sprintf("%sWHERE %s = %s", self::SELECT, $key, $value);
+        }else {
+            $request = self::SELECT;
+        }
         if (isset($order)) {
             $request .= sprintf("ORDER BY %s %s", key($order), strtoupper($order[key($order)]));
         }
