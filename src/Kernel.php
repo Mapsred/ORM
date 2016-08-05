@@ -130,22 +130,6 @@ class Kernel
     /**
      * @return string
      */
-    public static function getConfigPath()
-    {
-        return self::$configPath;
-    }
-
-    /**
-     * @param string $configPath
-     */
-    public static function setConfigPath($configPath)
-    {
-        self::$configPath = $configPath;
-    }
-
-    /**
-     * @return string
-     */
     public static function getDirEntity()
     {
         return self::$dir_entity;
