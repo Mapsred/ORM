@@ -8,6 +8,8 @@
 
 namespace Maps_red\ORM\Abstracts;
 
+use Maps_red\ORM\Kernel;
+
 abstract class MainEntity
 {
     /**
@@ -39,7 +41,8 @@ abstract class MainEntity
         $fields = $this->getFields();
         $datas = [];
         foreach ($fields as $field) {
-            $getter = "get".ucfirst($field);
+            $field = Kernel::dashesToCamelCase($field, true);
+            $getter = "get".$field;
             $data = $this->$getter();
             if (!$data) {
                 continue;
@@ -92,7 +95,8 @@ abstract class MainEntity
      */
     public function _get($name)
     {
-        $getter = "set".ucfirst($name);
+        $name = Kernel::dashesToCamelCase($name, true);
+        $getter = "set".$name;
 
         return $this->$getter();
     }
@@ -119,7 +123,8 @@ abstract class MainEntity
         $fields = $this->getFields();
         $datas = [];
         foreach ($fields as $field) {
-            $getter = "get".ucfirst($field);
+            $field = Kernel::dashesToCamelCase($field, true);
+            $getter = "get".$field;
             $data = $this->$getter();
             if (is_object($data) && $recursive) {
                 /** @var MainEntity $data */
