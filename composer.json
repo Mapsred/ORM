@@ -2,9 +2,14 @@
     "name": "maps_red/orm",
     "authors": [
         {
-            "name": "Francois",
+            "name": "Francois Mathieu",
             "email": "maps_red@yahoo.fr"
         }
     ],
-    "require": {}
+    "require": {},
+
+    "autoload": {
+        "psr-4": { "ORM\\": "src/" }
+    }
+
 }

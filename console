@@ -1,0 +1,47 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Maps_red
+ * Date: 05/08/2016
+ * Time: 19:29
+ */
+require_once(__DIR__."/autoload.php");
+
+$commands = [
+    'generator' => [
+        'entity' => 1,
+        'repository' => 2,
+    ],
+];
+
+$command = explode(":", $argv[1]);
+if (!isset($commands[$command[0]][$command[1]])) {
+    echo("Command not found");
+    exit;
+}
+
+$case = $commands[$command[0]][$command[1]];
+
+switch ($case) {
+    case $case == 1 || $case == 2:
+        if (!isset($argv[2])) {
+            echo "table name must be defined";
+            exit;
+        }
+        if (!isset($argv[3])) {
+            echo "class name must be defined";
+            exit;
+        }
+        $generator = new \ORM\Generator\Generator($argv[2]);
+        if ($case == 1) {
+            $generator->entity($argv[3]);
+        } else {
+            $generator->repository($argv[3]);
+        }
+        break;
+    default:
+        echo "No endpoint defined for this case $case";
+        break;
+}
+
