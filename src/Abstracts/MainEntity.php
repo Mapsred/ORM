@@ -41,8 +41,8 @@ abstract class MainEntity
         $fields = $this->getFields();
         $datas = [];
         foreach ($fields as $field) {
-            $field = Kernel::dashesToCamelCase($field, true);
-            $getter = "get".$field;
+            $fieldCamel = Kernel::dashesToCamelCase($field, true);
+            $getter = "get".$fieldCamel;
             $data = $this->$getter();
             if (!$data) {
                 continue;
@@ -95,8 +95,8 @@ abstract class MainEntity
      */
     public function _get($name)
     {
-        $name = Kernel::dashesToCamelCase($name, true);
-        $getter = "set".$name;
+        $fieldCamel = Kernel::dashesToCamelCase($name, true);
+        $getter = "set".$fieldCamel;
 
         return $this->$getter();
     }
@@ -123,8 +123,8 @@ abstract class MainEntity
         $fields = $this->getFields();
         $datas = [];
         foreach ($fields as $field) {
-            $field = Kernel::dashesToCamelCase($field, true);
-            $getter = "get".$field;
+            $fieldCamel = Kernel::dashesToCamelCase($field, true);
+            $getter = "get".$fieldCamel;
             $data = $this->$getter();
             if (is_object($data) && $recursive) {
                 /** @var MainEntity $data */

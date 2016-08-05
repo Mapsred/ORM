@@ -43,10 +43,10 @@ abstract class MainRepository extends DataBase
         $object = self::hydrate($object, $data);
         foreach ($fields as $key => $field) {
             $repository = Kernel::getNamespaceRepository().$repository[$key];
-            $field = Kernel::dashesToCamelCase($field, true);
-            $getter = "get".$field;
+            $fieldCamel = Kernel::dashesToCamelCase($field, true);
+            $getter = "get".$fieldCamel;
             $fieldData = $object->$getter();
-            $setter = "set".$field;
+            $setter = "set".$fieldCamel;
             $object->$setter($fieldData, true);
         }
 
@@ -61,8 +61,8 @@ abstract class MainRepository extends DataBase
     public static function hydrate($object, array $data)
     {
         foreach ($data as $key => $item) {
-            $key = Kernel::dashesToCamelCase($key, true);
-            $setter = "set".$key;
+            $fieldCamel = Kernel::dashesToCamelCase($key, true);
+            $setter = "set".$fieldCamel;
             $object->$setter($item);
         }
 
@@ -111,8 +111,8 @@ abstract class MainRepository extends DataBase
         $columns = [];
         $updating = [];
         foreach ($fields as $field) {
-            $field = Kernel::dashesToCamelCase($field, true);
-            $getter = "get".$field;
+            $fieldCamel = Kernel::dashesToCamelCase($field, true);
+            $getter = "get".$fieldCamel;
             $value = $entity->$getter();
             if (!isset($value)) {
                 continue;
