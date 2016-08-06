@@ -114,6 +114,7 @@ abstract class MainRepository extends DataBase
             $fieldCamel = Kernel::dashesToCamelCase($field, true);
             $getter = "get".$fieldCamel;
             $value = $entity->$getter();
+            $value = $this->DateTimeFormat($value);
             if (!isset($value)) {
                 continue;
             } elseif (is_object($value)) {
@@ -122,7 +123,6 @@ abstract class MainRepository extends DataBase
             }
 
             $columns[$field] = $field;
-            $value = $this->DateTimeFormat($value);
             $value = self::secureEncodeSQL($value);
             $values[$field] = $value;
             $updating[] = "$field=$value";
@@ -194,7 +194,7 @@ abstract class MainRepository extends DataBase
             $key = key($array);
             $value = self::secureEncodeSQL($array[$key]);
             $request = sprintf("%sWHERE %s = %s", self::SELECT, $key, $value);
-        }else {
+        } else {
             $request = self::SELECT;
         }
         if (isset($order)) {
