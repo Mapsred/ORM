@@ -167,9 +167,9 @@ class Generator
         $fileContent .= "\t * @param array ".'$order'."\n";
         $fileContent .= "\t * @return $entity|null\n";
         $fileContent .= "\t */\n";
-        $fileContent .= "\tpublic function findOneBy(".'array $array, array $order = null'.")\n";
+        $fileContent .= "\tpublic function findOneBy(".'array $array'.")\n";
         $fileContent .= "\t{\n";
-        $fileContent .= "\t\treturn parent::findOneBy(".'$array, $order'.");\n";
+        $fileContent .= "\t\treturn parent::findOneBy(".'$array'.");\n";
         $fileContent .= "\t}\n\n";
         $fileContent .= "\t/**\n";
         $fileContent .= "\t * @param $entity $$varEntity\n";

@@ -34,17 +34,17 @@ class QueryBuilder
     private $entity;
     /** @var MainRepository $repository */
     private $repository;
-    /** @var string $name */
-    private $name;
+    /** @var array $joins */
+    private $joins;
+
+    const QUERY_UNIQUE = 1;
 
     /**
      * QueryBuilder constructor.
-     * @param string|null $name
      */
-    public function __construct($name = "q")
+    public function __construct()
     {
         $this->pdo = DataBase::generatePdo();
-        $this->name = $name;
     }
 
     /**
@@ -53,7 +53,7 @@ class QueryBuilder
      */
     public function select($select = null)
     {
-        $select = $select ? $select : "$this->name.*";
+        $select = $select ? $select : "$this->from.*";
         $this->select = DataBase::secureEncodeSQL($select);
 
         return $this;
@@ -77,13 +77,9 @@ class QueryBuilder
      */
     public function where($where = null)
     {
-        $whereArray = explode(" ", $where);
+        $whereArray = explode(" ", $where, 3);
         if (count($whereArray) < 3) {
             throw new QueryBuilderException("Where must have spaces between the operator");
-        } elseif (count($whereArray) > 3) {
-            $key = $whereArray[0];
-            unset($whereArray[0]);
-            $this->where = sprintf("%s %s ", $key, implode(" ", $whereArray));
         } else {
             $value = DataBase::secureEncodeSQL($whereArray[2]);
             $this->where = sprintf("%s %s %s", $whereArray[0], $whereArray[1], $value);
@@ -173,6 +169,17 @@ class QueryBuilder
     }
 
     /**
+     * @param $field
+     * @return QueryBuilder
+     */
+    public function leftJoin($field)
+    {
+        $this->joins[] = $field;
+
+        return $this;
+    }
+
+    /**
      * @return QueryBuilder
      * @throws QueryBuilderException
      */
@@ -181,7 +188,13 @@ class QueryBuilder
         if (!$this->from) {
             throw new QueryBuilderException("FROM must be defined");
         }
+        $this->select = $this->select != "*" ? $this->select : $this->from.".*";
         $query = sprintf("SELECT %s FROM %s", $this->select, $this->from);
+        if ($this->joins) {
+            foreach ($this->joins as $join) {
+                $query.= sprintf(" LEFT JOIN %s ON %s.%s = %s.id", $join, $this->from, $join, $join);
+            }
+        }
 
         if ($this->where) {
             $query .= sprintf(" WHERE %s", $this->where);
@@ -215,11 +228,11 @@ class QueryBuilder
     }
 
     /**
-     * @param bool $uniq
+     * @param int $uniq
      * @return array|mixed|object
      * @throws QueryBuilderException
      */
-    public function getResult($uniq = false)
+    public function getResult($uniq = null)
     {
         if (!$this->query) {
             throw new QueryBuilderException("Query not created yet, call getQuery first");
@@ -227,7 +240,7 @@ class QueryBuilder
         $req = $this->pdo->prepare($this->query);
         $req->execute();
 
-        $datas = $uniq ? $req->fetch(\PDO::FETCH_ASSOC) : $req->fetchAll(\PDO::FETCH_ASSOC);
+        $datas = $uniq == self::QUERY_UNIQUE ? $req->fetch(\PDO::FETCH_ASSOC) : $req->fetchAll(\PDO::FETCH_ASSOC);
 
         $returnArray = [];
         if ($this->entity && $this->repository) {

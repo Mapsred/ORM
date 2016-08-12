@@ -79,7 +79,7 @@ abstract class DataBase
      */
     public function executing($request)
     {
-        $request = sprintf($request, $this->database);
+        $request = sprintf($request, $this->database, $this->database);
         $req = self::$pdo->prepare($request);
         $req->execute();
 
