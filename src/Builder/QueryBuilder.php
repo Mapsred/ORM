@@ -9,7 +9,9 @@
 namespace Maps_red\ORM\Builder;
 
 use Maps_red\ORM\Abstracts\DataBase;
+use Maps_red\ORM\Abstracts\MainEntity;
 use Maps_red\ORM\Abstracts\MainRepository;
+use ORM\Repository\ProjectRepository;
 
 class QueryBuilder
 {
@@ -29,15 +31,21 @@ class QueryBuilder
     private $_maxResults;
     /** @var string $query */
     private $query;
-    /** @var object $entity */
+    /** @var MainEntity $entity */
     private $entity;
+    /** @var MainRepository $repository */
+    private $repository;
+    /** @var string $name */
+    private $name;
 
     /**
      * QueryBuilder constructor.
+     * @param string|null $name
      */
-    public function __construct()
+    public function __construct($name = "q")
     {
         $this->pdo = DataBase::generatePdo();
+        $this->name = $name;
     }
 
     /**
@@ -46,7 +54,7 @@ class QueryBuilder
      */
     public function select($select = null)
     {
-        $select = $select ? $select : "*";
+        $select = $select ? $select : "$this->name.*";
         $this->select = DataBase::secureEncodeSQL($select);
 
         return $this;
@@ -223,16 +231,18 @@ class QueryBuilder
         $datas = $uniq ? $req->fetch(\PDO::FETCH_ASSOC) : $req->fetchAll(\PDO::FETCH_ASSOC);
 
         $returnArray = [];
-        if ($this->entity) {
+        if ($this->entity && $this->repository) {
+            /** @var MainRepository $repo */
+            $repo = new $this->repository();
             if (!$uniq) {
                 foreach ($datas as $item) {
                     $object = new $this->entity();
-                    $data = !$item ? $item : MainRepository::hydrate($object, $item);
+                    $data = !$item ? $item : $repo::hydrate($object, $item);
                     $returnArray[] = $data;
                 }
             }else {
                 $object = new $this->entity();
-                $data = !$datas ? $datas : MainRepository::hydrate($object, $datas);
+                $data = !$datas ? $datas : $repo::hydrate($object, $datas);
                 $returnArray = $data;
             }
         }
@@ -247,6 +257,17 @@ class QueryBuilder
     public function setEntity($entity)
     {
         $this->entity = $entity;
+
+        return $this;
+    }
+
+    /**
+     * @param MainRepository $repository
+     * @return $this
+     */
+    public function setRepository($repository)
+    {
+        $this->repository = $repository;
 
         return $this;
     }

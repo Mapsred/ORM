@@ -126,6 +126,7 @@ class Generator
     public function repository($class)
     {
         $entity = ucfirst($class);
+        $repo = $entity."Repository";
         $varEntity = strtolower($entity);
         $className = $entity."Repository";
         $filename = $className.'.php';
@@ -143,7 +144,8 @@ class Generator
         $fileContent .= "\t{\n";
         $fileContent .= "\t\t".'$database = "'.$this->tableName.'";'."\n";
         $entityNamespace = str_replace("\\", "\\\\", $this->namespaceEntity);
-        $fileContent .= "\t\tparent::__construct(".'$database,'." \"$entityNamespace\\\\$entity\");\n";
+        $repoNamespace = str_replace("\\", "\\\\", $this->namespaceRepository);
+        $fileContent .= "\t\tparent::__construct(".'$database,'." \"$entityNamespace\\\\$entity\", \"$repoNamespace\\\\$repo\");\n";
         $fileContent .= "\t}\n\n";
         $fileContent .= "\t/**\n";
         $fileContent .= "\t * @return $entity|null.\n";

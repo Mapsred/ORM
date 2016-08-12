@@ -16,18 +16,22 @@ abstract class MainRepository extends DataBase
     const SELECT = "SELECT * FROM %s ";
     const INSERT = "INSERT INTO %s ";
     const DELETE = "DELETE FROM %s ";
-    /** @var object $entity */
+    /** @var MainEntity $entity */
     private $entity;
+    /** @var MainRepository $repository */
+    private $repository;
 
     /**
      * MainCollection constructor.
      * @param $database
      * @param $entity
+     * @param $repository
      */
-    public function __construct($database, $entity)
+    public function __construct($database, $entity, $repository)
     {
         parent::__construct($database);
         $this->entity = $entity;
+        $this->repository = $repository;
     }
 
     /**
@@ -54,9 +58,9 @@ abstract class MainRepository extends DataBase
     }
 
     /**
-     * @param object $object
+     * @param MainEntity $object
      * @param array $data
-     * @return object
+     * @return MainEntity
      */
     public static function hydrate($object, array $data)
     {
@@ -226,13 +230,14 @@ abstract class MainRepository extends DataBase
     }
 
     /**
+     * @param string|null $name
      * @return QueryBuilder
      */
-    public function QueryBuilder()
+    public function createQueryBuilder($name = "q")
     {
-        $queryBuilder = new QueryBuilder();
+        $queryBuilder = new QueryBuilder($name);
 
-        return $queryBuilder->from($this->getDatabase())->setEntity($this->entity);
+        return $queryBuilder->from($this->getDatabase())->setEntity($this->entity)->setRepository($this->repository);
     }
 
     /**
