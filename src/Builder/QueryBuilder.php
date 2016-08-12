@@ -11,7 +11,6 @@ namespace Maps_red\ORM\Builder;
 use Maps_red\ORM\Abstracts\DataBase;
 use Maps_red\ORM\Abstracts\MainEntity;
 use Maps_red\ORM\Abstracts\MainRepository;
-use ORM\Repository\ProjectRepository;
 
 class QueryBuilder
 {
@@ -268,6 +267,17 @@ class QueryBuilder
     public function setRepository($repository)
     {
         $this->repository = $repository;
+
+        return $this;
+    }
+
+    /**
+     * @param $query
+     * @return QueryBuilder
+     */
+    public function setCustomQuery($query)
+    {
+        $this->query = $query;
 
         return $this;
     }
