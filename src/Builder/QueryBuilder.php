@@ -117,13 +117,9 @@ class QueryBuilder
      */
     private function addWhere($where, $type)
     {
-        $whereArray = explode(" ", $where);
+        $whereArray = explode(" ", $where, 3);
         if (count($whereArray) < 3) {
             throw new QueryBuilderException("Where must have spaces between the operator");
-        } elseif (count($whereArray) > 3) {
-            $key = $whereArray[0];
-            unset($whereArray[0]);
-            $content = sprintf("%s %s ", $key, implode(" ", $whereArray));
         } else {
             $value = DataBase::secureEncodeSQL($whereArray[2]);
             $content = sprintf("%s %s %s", $whereArray[0], $whereArray[1], $value);

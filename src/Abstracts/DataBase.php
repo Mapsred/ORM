@@ -45,6 +45,7 @@ abstract class DataBase
      */
     public static function secureEncodeSQL($value)
     {
+        $value = trim($value);
         $oupperValue = strtoupper($value);
         if ($oupperValue != "NULL" && $oupperValue != "*") {
             $encodedValue = addslashes($value);
