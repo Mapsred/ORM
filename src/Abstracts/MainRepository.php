@@ -220,7 +220,7 @@ abstract class MainRepository extends DataBase
         } else {
             $request = self::SELECT;
         }
-        if (isset($order)) {
+        if (isset($order) && !empty($order)) {
             $request .= sprintf("ORDER BY %s %s", key($order), strtoupper($order[key($order)]));
         }
         if (isset($limit)) {
