@@ -137,10 +137,10 @@ class Generator
         $fileContent .= "/**\n";
         $fileContent .= " * Class $className\n";
         $fileContent .= " * @package $this->namespaceEntity\n";
-        $fileContent .= " * @method $entity|null findOne\n";
-        $fileContent .= " * @method $entity|null findOneById\n";
-        $fileContent .= " * @method $entity|null findOneBy\n";
-        $fileContent .= " * @method $entity|null save\n";
+        $fileContent .= " * @method $entity|null findOne()\n";
+        $fileContent .= " * @method $entity|null findOneById(\$id)\n";
+        $fileContent .= " * @method $entity|null findOneBy(array \$array)\n";
+        $fileContent .= " * @method $entity|null save(\$entity)\n";
         $fileContent .= "*/\n";
         $fileContent .= "class $className extends MainRepository\n";
         $fileContent .= "{\n";
