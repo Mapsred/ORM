@@ -33,7 +33,7 @@ abstract class DataBase
      */
     public static function generatePdo()
     {
-        $pdo = sprintf("mysql:dbname=%s;host=%s", Kernel::getDbName(), Kernel::getDbHost());
+        $pdo = sprintf("mysql:dbname=%s;host=%s;charset=utf8", Kernel::getDbName(), Kernel::getDbHost());
         self::$pdo = new \PDO($pdo, Kernel::getDbUser(), Kernel::getDbPass());
 
         return self::$pdo;
