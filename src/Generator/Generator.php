@@ -127,7 +127,6 @@ class Generator
     {
         $entity = ucfirst($class);
         $repo = $entity."Repository";
-        $varEntity = strtolower($entity);
         $className = $entity."Repository";
         $filename = $className.'.php';
 
@@ -135,6 +134,14 @@ class Generator
         $fileContent .= "namespace $this->namespaceRepository;\n\n";
         $fileContent .= "use $this->namespaceEntity\\$entity;\n";
         $fileContent .= "use Maps_red\\ORM\\Abstracts\\MainRepository;\n";
+        $fileContent .= "/**\n";
+        $fileContent .= " * Class $className\n";
+        $fileContent .= " * @package $this->namespaceEntity\n";
+        $fileContent .= " * @method $entity|null findOne\n";
+        $fileContent .= " * @method $entity|null findOneById\n";
+        $fileContent .= " * @method $entity|null findOneBy\n";
+        $fileContent .= " * @method $entity|null save\n";
+        $fileContent .= "*/\n";
         $fileContent .= "\nclass $className extends MainRepository\n";
         $fileContent .= "{\n";
         $fileContent .= "\t/**\n";
@@ -147,38 +154,6 @@ class Generator
         $repoNamespace = str_replace("\\", "\\\\", $this->namespaceRepository);
         $fileContent .= "\t\tparent::__construct(".'$database,'." \"$entityNamespace\\\\$entity\", \"$repoNamespace\\\\$repo\");\n";
         $fileContent .= "\t}\n\n";
-        $fileContent .= "\t/**\n";
-        $fileContent .= "\t * @return $entity|null.\n";
-        $fileContent .= "\t */\n";
-        $fileContent .= "\tpublic function findOne()\n";
-        $fileContent .= "\t{\n";
-        $fileContent .= "\t\treturn parent::findOne();\n";
-        $fileContent .= "\t}\n\n";
-        $fileContent .= "\t/**\n";
-        $fileContent .= "\t * @param ".'$id'."\n";
-        $fileContent .= "\t * @return $entity|null\n";
-        $fileContent .= "\t */\n";
-        $fileContent .= "\tpublic function findOneById(".'$id'.")\n";
-        $fileContent .= "\t{\n";
-        $fileContent .= "\t\treturn parent::findOneById(".'$id'.");\n";
-        $fileContent .= "\t}\n\n";
-        $fileContent .= "\t/**\n";
-        $fileContent .= "\t * @param array ".'$array'."\n";
-        $fileContent .= "\t * @param array ".'$order'."\n";
-        $fileContent .= "\t * @return $entity|null\n";
-        $fileContent .= "\t */\n";
-        $fileContent .= "\tpublic function findOneBy(".'array $array'.")\n";
-        $fileContent .= "\t{\n";
-        $fileContent .= "\t\treturn parent::findOneBy(".'$array'.");\n";
-        $fileContent .= "\t}\n\n";
-        $fileContent .= "\t/**\n";
-        $fileContent .= "\t * @param $entity $$varEntity\n";
-        $fileContent .= "\t * @return $entity|null.\n";
-        $fileContent .= "\t */\n";
-        $fileContent .= "\tpublic function save($$varEntity)\n";
-        $fileContent .= "\t{\n";
-        $fileContent .= "\t\treturn parent::save($$varEntity);\n";
-        $fileContent .= "\t}\n";
         $fileContent .= "}";
 
         $file = $this->dir_repository.$filename;
