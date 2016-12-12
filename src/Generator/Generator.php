@@ -142,7 +142,7 @@ class Generator
         $fileContent .= " * @method $entity|null findOneBy\n";
         $fileContent .= " * @method $entity|null save\n";
         $fileContent .= "*/\n";
-        $fileContent .= "\nclass $className extends MainRepository\n";
+        $fileContent .= "class $className extends MainRepository\n";
         $fileContent .= "{\n";
         $fileContent .= "\t/**\n";
         $fileContent .= "\t * $className constructor.\n";
