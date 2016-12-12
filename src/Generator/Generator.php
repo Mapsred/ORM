@@ -149,10 +149,9 @@ class Generator
         $fileContent .= "\t */\n";
         $fileContent .= "\tpublic function __construct()\n";
         $fileContent .= "\t{\n";
-        $fileContent .= "\t\t".'$database = "'.$this->tableName.'";'."\n";
         $entityNamespace = str_replace("\\", "\\\\", $this->namespaceEntity);
         $repoNamespace = str_replace("\\", "\\\\", $this->namespaceRepository);
-        $fileContent .= "\t\tparent::__construct(".'$database,'." \"$entityNamespace\\\\$entity\", \"$repoNamespace\\\\$repo\");\n";
+        $fileContent .= "\t\tparent::__construct(\"$this->tableName\", \"$entityNamespace\\\\$entity\", \"$repoNamespace\\\\$repo\");\n";
         $fileContent .= "\t}\n\n";
         $fileContent .= "}";
 
