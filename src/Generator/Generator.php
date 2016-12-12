@@ -62,7 +62,7 @@ class Generator
             $default = $item['Default'];
             $default = is_numeric($default) ? $default : "'$default'";
             $type = $type == "int" ? "integer" : $type;
-            $type = $type == "varchar" ? "string" : $type;
+            $type = $type == "varchar" || "text" ? "string" : $type;
             $type = $type == "date" || $type == "datetime" ? "\\DateTime" : $type;
             $fileContent .= "\t/** @var $type $$field */\n";
             $fileContent .= $item['Default'] ? "\tprivate $$field = $default;\n" : "\tprivate $$field;\n";
