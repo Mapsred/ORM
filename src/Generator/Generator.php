@@ -131,7 +131,7 @@ class Generator
         $filename = $className.'.php';
 
         $fileContent = $this->buildComment();
-        $fileContent .= "namespace $this->namespaceRepository;\n\n";
+        $fileContent .= sprintf("namespace %s;\n\n", str_replace("\\\\", "\\", $this->namespaceRepository));
         $fileContent .= "use $this->namespaceEntity\\$entity;\n";
         $fileContent .= "use Maps_red\\ORM\\Abstracts\\MainRepository;\n";
         $fileContent .= "/**\n";
