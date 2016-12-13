@@ -96,7 +96,7 @@ abstract class MainEntity
     public function _get($name)
     {
         $fieldCamel = Kernel::dashesToCamelCase($name, true);
-        $getter = "set".$fieldCamel;
+        $getter = "get".$fieldCamel;
 
         return $this->$getter();
     }

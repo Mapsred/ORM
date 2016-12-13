@@ -58,22 +58,20 @@ class Generator
 
         foreach ($this->data as $item) {
             $type = explode("(", $item['Type'])[0];
-            $field =$item['Field'];
+            $field = $item['Field'];
             $default = $item['Default'];
             $default = is_numeric($default) ? $default : "'$default'";
-            $type = $type == "int" ? "integer" : $type;
-            $type = $type == "varchar" || "text" ? "string" : $type;
-            $type = $type == "date" || $type == "datetime" ? "\\DateTime" : $type;
+            $type = $this->getType($type);
             $fileContent .= "\t/** @var $type $$field */\n";
             $fileContent .= $item['Default'] ? "\tprivate $$field = $default;\n" : "\tprivate $$field;\n";
 
-            $contentArray[] = ['type' => $type,'field' => $field];
+            $contentArray[] = ['type' => $type, 'field' => $field];
         }
 
         $fileContent .= "\n";
 
         foreach ($contentArray as $item) {
-            $type = $item['type'] == "integer" ? "int" : $item['type'];
+            $type = $this->getType($type);
             $field = $item['field'];
             $fieldCamel = Kernel::dashesToCamelCase($field, true);
             $getter = "get".$fieldCamel;
@@ -121,6 +119,46 @@ class Generator
     }
 
     /**
+     * @return string
+     */
+    public function buildComment()
+    {
+        $fileContent = "<?php \n\n";
+        $fileContent .= "/**\n";
+        $fileContent .= " * Created by PhpStorm\n";
+        $fileContent .= " * User: Maps_red\n";
+        $fileContent .= " * Date: $this->date\n";
+        $fileContent .= " * Time: $this->time\n";
+        $fileContent .= " */\n\n";
+
+        return $fileContent;
+    }
+
+    /**
+     * @param $type
+     * @return string
+     */
+    private function getType($type)
+    {
+        switch ($type) {
+            case $type == "int":
+                return "integer";
+                break;
+            case $type == "varchar":
+            case $type == "text":
+                return "string";
+                break;
+            case $type == "date":
+            case $type == "datetime":
+                return "\\DateTime";
+            break;
+            default:
+                return $type;
+            break;
+        }
+    }
+
+    /**
      * @param $class
      */
     public function repository($class)
@@ -163,21 +201,5 @@ class Generator
             mkdir($this->dir_repository);
         }
         file_put_contents($file, $fileContent);
-    }
-
-    /**
-     * @return string
-     */
-    public function buildComment()
-    {
-        $fileContent = "<?php \n\n";
-        $fileContent .= "/**\n";
-        $fileContent .= " * Created by PhpStorm\n";
-        $fileContent .= " * User: Maps_red\n";
-        $fileContent .= " * Date: $this->date\n";
-        $fileContent .= " * Time: $this->time\n";
-        $fileContent .= " */\n\n";
-
-        return $fileContent;
     }
 }
