@@ -57,11 +57,10 @@ class Generator
         $fileContent .= "{\n";
 
         foreach ($this->data as $item) {
-            $type = explode("(", $item['Type'])[0];
             $field = $item['Field'];
             $default = $item['Default'];
             $default = is_numeric($default) ? $default : "'$default'";
-            $type = $this->getType($type);
+            $type = $this->getType(explode("(", $item['Type'])[0]);
             $fileContent .= "\t/** @var $type $$field */\n";
             $fileContent .= $item['Default'] ? "\tprivate $$field = $default;\n" : "\tprivate $$field;\n";
 
@@ -71,7 +70,7 @@ class Generator
         $fileContent .= "\n";
 
         foreach ($contentArray as $item) {
-            $type = $this->getType($type);
+            $type = $this->getType($item['type']);
             $field = $item['field'];
             $fieldCamel = Kernel::dashesToCamelCase($field, true);
             $getter = "get".$fieldCamel;
