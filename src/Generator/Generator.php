@@ -151,6 +151,8 @@ class Generator
             case $type == "datetime":
                 return "\\DateTime";
             break;
+            case $type == "tinyint":
+                return 'bool';
             default:
                 return $type;
             break;
